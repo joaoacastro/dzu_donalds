@@ -74,6 +74,8 @@ neste projeto vamos inserir um botão do shadcn, para isso utilizamos o seguinte
 npx shadcn@2.3.0 add button
 _________________________________
 
+os valores padrões do Tailwind ficam no caminho .\src\app\globals.css
+
 ### Rodar o projeto
 - NPM RUN DEV
 
