@@ -21,7 +21,7 @@
 - Simple React Snippets
 
 ## Framework utilizado nesse projeto:
-- NEXT.js
+- NEXT.js, Tailwind, Shadcn
 
 ## Banco de dados
 Banco relacional: PostgreSQL
@@ -56,6 +56,23 @@ incluir o seguinte após scripts
 
 depois para rodar o prisma, utilizamos o seguinte comando
 npx prisma db seed
+
+_________________________________
+
+Qualquer pasta criada dentro da pasta `app` (localizada dentro de `src`) que contenha um arquivo `page.tsx` será tratada como uma rota. O nome da pasta se tornará a rota correspondente. Por exemplo, se houver um arquivo no caminho `src/app/products/page.tsx`, a rota no navegador será `localhost:3000/products`.
+_________________________________
+
+atalho sfc para criar uma const no page.tsx
+
+_________________________________
+
+## shadcn
+instalamos o shadcn com o seguinte comando
+npx shadcn@2.3.0 init
+
+neste projeto vamos inserir um botão do shadcn, para isso utilizamos o seguinte comando
+npx shadcn@2.3.0 add button
+_________________________________
 
 ### Rodar o projeto
 - NPM RUN DEV
