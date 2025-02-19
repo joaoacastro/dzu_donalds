@@ -78,6 +78,62 @@ os valores padrões do Tailwind ficam no caminho .\src\app\globals.css
 Tudo o que vc quiser que seja global no projeto, colocar no layout.tsx, pois vai aparecer em todas as paginas automaticamente.
 _________________________________
 
+plugin eslint: onde ele corrigi erros de ordem do import
+comando
+npm install -D eslint-plugin-simple-import-sort@12.1.1
+
+no arquivo eslint.config.mjs
+add o import simpleImportSort from "eslint-plugin-simple-import-sort";
+e deixar o eslintConfig da seguinte forma
+
+const eslintConfig = [
+  ...compat.extends("next/core-web-vitals", "next/typescript"),
+  {
+    plugins: {
+      "simple-import-sort": simpleImportSort,
+    },
+    rules: {
+      "simple-import-sort/imports": "error",
+      "simple-import-sort/exports": "error",
+    },
+  },
+];
+
+podemos deixar isso automatizado, ou seja, quando salvar ele automaticamente ja faz a correções
+
+vamos criar a pasta .vscode na raiz do projeto e dentro dela o arquivo.json com o seguinte codigo
+
+{
+  "eslint.workingDirectories": [
+    {
+      "mode": "auto"
+    }
+  ],
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  }
+}
+
+_________________________________
+
+pluggin: prettier-plugin-tailwindcss, ao salvar o projeto ele ordena mantendo um padrão na ordem dos estilos utilizados
+comando para instalar
+npm install -D prettier-plugin-tailwindcss@0.6.5
+
+criar o arquivo .prettierrc.json na raiz do projeto
+com esse codigo dentro do arquivo
+
+{
+    "plugins": ["prettier-plugin-tailwindcss"]
+}
+  
+_________________________________
 
 ### Rodar o projeto
 - NPM RUN DEV
