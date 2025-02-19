@@ -45,6 +45,18 @@ Para criar essas tabelas em um banco de dados postgres vamos utilizar o Neondb
 para linkar a tabela com o banco de dados que acabos de criar, utilizamos o seguinte comando
 npx prisma migrate dev
 
+instalar o ts-node
+npm install -D ts-node@10.9.2
+alterar o arquivo package.json
+incluir o seguinte após scripts
+
+  "prisma": {
+    "seed":"ts-node ./prisma/seed.ts"
+  }
+
+depois para rodar o prisma, utilizamos o seguinte comando
+npx prisma db seed
+
 ### Rodar o projeto
 - NPM RUN DEV
 
