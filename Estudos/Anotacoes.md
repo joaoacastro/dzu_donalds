@@ -75,6 +75,9 @@ npx shadcn@2.3.0 add button
 _________________________________
 
 os valores padrões do Tailwind ficam no caminho .\src\app\globals.css
+Tudo o que vc quiser que seja global no projeto, colocar no layout.tsx, pois vai aparecer em todas as paginas automaticamente.
+_________________________________
+
 
 ### Rodar o projeto
 - NPM RUN DEV
