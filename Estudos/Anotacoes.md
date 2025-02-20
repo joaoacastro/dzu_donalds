@@ -38,7 +38,11 @@ npx prisma init
 
 Vamos colocar dentro do schema.prisma nossas tabelas do diagrama
 
-Depois de incluir todas as tabelas no schema.prisma, usamos o comando npx prisma format, para formatar nossa tabela
+Depois de incluir todas as tabelas no schema.prisma, usamos o comando
+
+npx prisma format
+
+para formatar nossa tabela
 
 Para criar essas tabelas em um banco de dados postgres vamos utilizar o Neondb
 
@@ -133,6 +137,15 @@ com esse codigo dentro do arquivo
     "plugins": ["prettier-plugin-tailwindcss"]
 }
   
+_________________________________
+
+## Server Components
+
+- Renderizados no servidor
+- Podem ser async, ou seja, assincronos
+- podem chamar recursos do back-end, ou seja, do banco de dados
+- não pode usar hooks, ou seja, useEffect, useState, nem adicionar elementos, como button onClick.
+
 _________________________________
 
 ### Rodar o projeto
