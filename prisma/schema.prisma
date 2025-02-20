@@ -22,7 +22,7 @@ model User {
 model Restaurant {
   id             String         @id @default(uuid())
   name           String
-  slug           String
+  slug           String         @unique
   description    String
   avatarImageUrl String
   coverImageUrl  String
@@ -73,7 +73,7 @@ model Order {
 
 model OrderProduct {
   id        String   @id @default(uuid())
-  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId String
   order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
   orderId   Int
@@ -91,6 +91,6 @@ enum OrderStatus {
 }
 
 enum ConsumptionMethod {
-  TO_GO
-  IN_LOCAL
+  TAKEAWAY
+  DINE_IN
 }
