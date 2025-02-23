@@ -26,13 +26,13 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const toggleCart = () => {
     setIsOpen(prev => !prev);
   }
-
+  
   return (
     <CartContext.Provider
       value={{
+        toggleCart,
         isOpen,
         products,
-        toggleCart,
       }}
     >
       {children}

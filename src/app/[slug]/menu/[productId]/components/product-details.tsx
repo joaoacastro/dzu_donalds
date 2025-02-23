@@ -7,15 +7,9 @@ import { useContext, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
 import { formatCurrency } from "@/helpers/format-currency";
 
+import CartSheet from "../../components/cart-sheet";
 import { CartContext } from "../../contexts/cart";
 
 interface ProductDetailsProps {
@@ -25,8 +19,7 @@ interface ProductDetailsProps {
 }
 
 const ProductDetails = ({ product }: ProductDetailsProps) => {
-  const { isOpen, toggleCart } = useContext(CartContext);
-  console.log("isOpen no ProductDetails:", isOpen);
+  const { toggleCart } = useContext(CartContext);
   const [quantity, setQuantity] = useState<number>(1);
   const handleDecreaseQuantity = () => {
     setQuantity((prev) => {
@@ -40,9 +33,9 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
     setQuantity((prev) => prev + 1);
   };
   const handleAddToCart = () => {
-    console.log("Botão clicado, chamando toggleCart...");
     toggleCart();
   };
+
   return (
     <>
       <div className="relative z-50 mt-[-1.5rem] flex flex-auto flex-col overflow-hidden rounded-t-3xl p-5">
@@ -117,17 +110,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
           Add no carrinho
         </Button>
       </div>
-      <Sheet open={isOpen} onOpenChange={toggleCart}>
-        <SheetContent>
-          <SheetHeader>
-            <SheetTitle>Are yout absolutely sure?</SheetTitle>
-            <SheetDescription>
-              This action cannot be undone. This will permantenly delete your
-              account and remove your data from our servers.
-            </SheetDescription>
-          </SheetHeader>
-        </SheetContent>
-      </Sheet>
+      <CartSheet />
     </>
   );
 };
