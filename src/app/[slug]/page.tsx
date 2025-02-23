@@ -28,11 +28,13 @@ const RestaurantPage = async ({ params }: RestaurantPageProps) => {
         <p>{restaurant?.description}</p>
       </div>
       <div className="space-y-2 pt-24 text-center">
-        <h3 className="text-2xl font-semibold">Seja bem-vindo!</h3>
-        <p className="opacity-55">
-          Escolha como prefere aproveitar sua refeição. Estamos aqui para
-          oferecer praticidade e sabor em cada detalhe
-        </p>
+        <div className="bg-amber-300 rounded-3xl 5rem p-4">
+          <h3 className="text-2xl font-semibold">Seja bem-vindo!</h3>
+          <p className="opacity-87">
+            Escolha como prefere aproveitar sua refeição. Estamos aqui para
+            oferecer praticidade e sabor em cada detalhe
+          </p>
+        </div>
       </div>
       <div className="grid grid-cols-2 pt-14">
         <ConsumptionMethodOption

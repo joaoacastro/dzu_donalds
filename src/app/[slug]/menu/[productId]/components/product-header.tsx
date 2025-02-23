@@ -28,7 +28,7 @@ const ProductHeader = ({ product }: ProductHeaderProps) => {
             <Image
                 src={product.imageUrl}
                 alt={product.name}
-                layout="fill"
+                fill
                 className="object-contain"
             />
 
