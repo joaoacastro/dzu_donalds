@@ -14,7 +14,6 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
-  DrawerTrigger,
 } from "@/components/ui/drawer";
 import {
   Form,
@@ -45,7 +44,12 @@ const formSchema = z.object({
 
 type FormSchema = z.infer<typeof formSchema>;
 
-const FinishOrderDialog = () => {
+interface FinishOrderDialogProps {
+  open: boolean; // Prop para controlar se está aberto ou não
+  onOpenChange: (open: boolean) => void; // Prop para controlar o fechamento
+}
+
+const FinishOrderDialog = ({ open, onOpenChange }: FinishOrderDialogProps) => {
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -57,15 +61,11 @@ const FinishOrderDialog = () => {
 
   const onSubmit = (data: FormSchema) => {
     console.log({ data });
+    onOpenChange(false); // Fechar o Drawer ao enviar o formulário
   };
 
   return (
-    <Drawer>
-      <DrawerTrigger asChild>
-          <Button className="w-full rounded-full">
-            Finalizar Pedido
-          </Button>
-      </DrawerTrigger>
+    <Drawer open={open} onOpenChange={onOpenChange}> {/* Usando a prop "open" */}
       <DrawerContent>
         <DrawerHeader>
           <DrawerTitle>Finalizar Pedido?</DrawerTitle>
@@ -119,7 +119,7 @@ const FinishOrderDialog = () => {
                   Finalizar
                 </Button>
                 <DrawerClose asChild>
-                  <Button variant="outline" className="w-full rounded-full">
+                  <Button onClick={() => onOpenChange(false)} variant="outline" className="w-full rounded-full"> {/* Fechar ao clicar em Cancelar */}
                     Cancel
                   </Button>
                 </DrawerClose>
