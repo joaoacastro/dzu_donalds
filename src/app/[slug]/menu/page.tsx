@@ -1,13 +1,12 @@
 import { notFound } from "next/navigation";
 
-import { db } from "@/lib/prisma";
-
+import { getRestaurantBySlug } from "./actions/get-restaurant-by-slug";
 import RestaurantCategories from "./components/categories";
 import RestaurantHeader from "./components/header";
 
 interface RestaurantMenuPageProps {
-  params: Promise<{ slug: string }>;
-  searchParams: Promise<{ consumptionMethod: string }>;
+  params: { slug: string };
+  searchParams: { consumptionMethod: string };
 }
 
 const isConsumptionMethodValid = (consumptionMethod: string) => {
@@ -18,29 +17,37 @@ const RestaurantMenuPage = async ({
   params,
   searchParams,
 }: RestaurantMenuPageProps) => {
-  const { slug } = await params;
-  const { consumptionMethod } = await searchParams;
-  if (!isConsumptionMethodValid(consumptionMethod)) {
-    return notFound();
-  }
-  const restaurant = await db.restaurant.findUnique({
-    where: { slug },
-    include: {
-      menuCategories: {
-        include: { products: true },
-      },
-    },
-  });
+  console.log("RestaurantMenuPage started");
+  const { slug } = params;
+  console.log("Slug:", slug);
+  const { consumptionMethod } = searchParams;
+  console.log("ConsumptionMethod:", consumptionMethod);
 
-  if (!restaurant) {
+  if (!isConsumptionMethodValid(consumptionMethod)) {
+    console.log("Invalid consumption method");
     return notFound();
   }
-  return (
-    <div>
-      <RestaurantHeader restaurant={restaurant} />
-      <RestaurantCategories restaurant={restaurant} />
-    </div>
-  );
+
+  try {
+    console.log("getRestaurantBySlug call");
+    const restaurant = await getRestaurantBySlug({ slug });
+    console.log("Restaurant:", restaurant);
+
+    if (!restaurant) {
+      console.log("Restaurant not found");
+      return notFound();
+    }
+
+    return (
+      <div>
+        <RestaurantHeader restaurant={restaurant} />
+        <RestaurantCategories restaurant={restaurant} />
+      </div>
+    );
+  } catch (error) {
+    console.error("Error:", error);
+    return notFound();
+  }
 };
 
 export default RestaurantMenuPage;

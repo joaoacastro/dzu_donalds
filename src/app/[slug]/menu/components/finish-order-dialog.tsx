@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { ConsumptionMethod } from "@prisma/client";
 import { useForm } from "react-hook-form";
 import { PatternFormat } from "react-number-format";
 import { z } from "zod";
@@ -25,6 +26,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
+import { createOrder } from "../actions/create-order";
 import { isValidCpf } from "../helpers/cpf";
 
 const formSchema = z.object({
@@ -47,9 +49,18 @@ type FormSchema = z.infer<typeof formSchema>;
 interface FinishOrderDialogProps {
   open: boolean; // Prop para controlar se está aberto ou não
   onOpenChange: (open: boolean) => void; // Prop para controlar o fechamento
+  products: Array<{ id: string; quantity: number }>;
+  restaurantId: string;
+  consumptionMethod: ConsumptionMethod;
 }
 
-const FinishOrderDialog = ({ open, onOpenChange }: FinishOrderDialogProps) => {
+const FinishOrderDialog = ({
+  open,
+  onOpenChange,
+  products,
+  restaurantId,
+  consumptionMethod,
+}: FinishOrderDialogProps) => {
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -59,13 +70,25 @@ const FinishOrderDialog = ({ open, onOpenChange }: FinishOrderDialogProps) => {
     shouldUnregister: true,
   });
 
-  const onSubmit = (data: FormSchema) => {
-    console.log({ data });
+  const onSubmit = async (data: FormSchema) => {
+    try {
+      await createOrder({
+        consumptionMethod,
+        customerCpf: data.cpf,
+        customerName: data.name,
+        restaurantId,
+        products,
+      });
+    } catch (error) {
+      console.log("Error creating order", error);
+    }
     onOpenChange(false); // Fechar o Drawer ao enviar o formulário
   };
 
   return (
-    <Drawer open={open} onOpenChange={onOpenChange}> {/* Usando a prop "open" */}
+    <Drawer open={open} onOpenChange={onOpenChange}>
+      {" "}
+      {/* Usando a prop "open" */}
       <DrawerContent>
         <DrawerHeader>
           <DrawerTitle>Finalizar Pedido?</DrawerTitle>
@@ -119,7 +142,13 @@ const FinishOrderDialog = ({ open, onOpenChange }: FinishOrderDialogProps) => {
                   Finalizar
                 </Button>
                 <DrawerClose asChild>
-                  <Button onClick={() => onOpenChange(false)} variant="outline" className="w-full rounded-full"> {/* Fechar ao clicar em Cancelar */}
+                  <Button
+                    onClick={() => onOpenChange(false)}
+                    variant="outline"
+                    className="w-full rounded-full"
+                  >
+                    {" "}
+                    {/* Fechar ao clicar em Cancelar */}
                     Cancel
                   </Button>
                 </DrawerClose>

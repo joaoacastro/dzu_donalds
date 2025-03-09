@@ -1,9 +1,8 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
-import { getRestaurantBySlug } from "@/data/get-restaurant-by-slug";
-
 import ConsumptionMethodOption from "./components/consumption-method-option";
+import { getRestaurantBySlug } from "./menu/actions/get-restaurant-by-slug";
 
 interface RestaurantPageProps {
   params: Promise<{ slug: string }>;
@@ -11,7 +10,7 @@ interface RestaurantPageProps {
 
 const RestaurantPage = async ({ params }: RestaurantPageProps) => {
   const { slug } = await params;
-  const restaurant = await getRestaurantBySlug(slug);
+  const restaurant = await getRestaurantBySlug({ slug });
   if (!restaurant) {
     return notFound();
   }
@@ -28,7 +27,7 @@ const RestaurantPage = async ({ params }: RestaurantPageProps) => {
         <p>{restaurant?.description}</p>
       </div>
       <div className="space-y-2 pt-24 text-center">
-        <div className="bg-amber-300 rounded-3xl 5rem p-4">
+        <div className="5rem rounded-3xl bg-amber-300 p-4">
           <h3 className="text-2xl font-semibold">Seja bem-vindo!</h3>
           <p className="opacity-87">
             Escolha como prefere aproveitar sua refeição. Estamos aqui para
