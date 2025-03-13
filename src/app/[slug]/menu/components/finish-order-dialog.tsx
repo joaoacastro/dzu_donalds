@@ -7,6 +7,7 @@ import { useParams, useSearchParams } from "next/navigation";
 import { useContext, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { PatternFormat } from "react-number-format";
+import { toast } from "sonner";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -28,9 +29,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { toast } from "@/components/ui/sonner";
 
 import { createOrder } from "../actions/create-order";
+import { CartContext } from "../contexts/cart";
 import { isValidCpf } from "../helpers/cpf";
 
 const formSchema = z.object({
