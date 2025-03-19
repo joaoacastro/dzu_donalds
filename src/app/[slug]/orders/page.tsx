@@ -1,5 +1,6 @@
-import { isValidCpf } from "../menu/helpers/cpf";
+import { isValidCpf, removeCpfPunctuation } from "../menu/helpers/cpf";
 import CpfForm from "./components/cpf-form";
+import OrderList from "./components/order-list";
 
 interface OrdersPageProps {
   searchParams: Promise<{ cpf: string }>;
@@ -10,7 +11,25 @@ const OrdersPage = async ({ searchParams }: OrdersPageProps) => {
   if (!cpf || !isValidCpf(cpf)) {
     return <CpfForm />;
   }
-  return <h1>Orders Page!</h1>;
+  const orders = await db.order.findMany({
+    where: {
+      customerCpf: removeCpfPunctuation(cpf),
+    },
+    include: {
+      restaurant: {
+        select: {
+          name: true,
+          avatarImageUrl: true,
+        },
+      },
+      orderProducts: {
+        include: {
+          products: true,
+        }
+      }
+    },
+  });
+  return <OrderList orders={orders} />;
 };
 
 export default OrdersPage;

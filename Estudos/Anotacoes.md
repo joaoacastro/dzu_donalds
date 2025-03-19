@@ -46,7 +46,7 @@ para formatar nossa tabela
 
 Para criar essas tabelas em um banco de dados postgres vamos utilizar o Neondb
 
-para linkar a tabela com o banco de dados que acabos de criar, utilizamos o seguinte comando
+para linkar a tabela com o banco de dados que acabamos de criar, utilizamos o seguinte comando
 npx prisma migrate dev
 
 instalar o ts-node
