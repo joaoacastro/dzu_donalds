@@ -66,7 +66,7 @@ export const createOrder = async (input: CreateOrderInput) => {
         restaurantId: restaurant.id,
       },
     });
-    redirect(`/${input.slug}/orders`);
+    redirect(`/${input.slug}/orders?cpf=${removeCpfPunctuation(input.customerCpf)}`);
   } catch (error) {
     console.error("Error creating order:", error);
     throw error; // Re-throw the error to be handled elsewhere
