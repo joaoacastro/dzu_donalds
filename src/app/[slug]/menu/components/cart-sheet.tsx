@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useContext, useState } from "react";
 
@@ -38,21 +38,28 @@ const CartSheet = () => {
               <CardContent className="p-5">
                 <div className="flex justify-between">
                   <p className="text-sm text-muted-foreground">Total</p>
-                  <p className="text-sm font-semibold">{formatCurrency(total)}</p>
+                  <p className="text-sm font-semibold">
+                    {formatCurrency(total)}
+                  </p>
                 </div>
               </CardContent>
             </Card>
-            <Button className="w-full rounded-full" onClick={() => setFinishOrderDialogIsOpen(true)}>Finalizar Pedido</Button>
+            <Button
+              className="w-full rounded-full"
+              onClick={() => setFinishOrderDialogIsOpen(true)}
+            >
+              Finalizar Pedido
+            </Button>
           </div>
         </SheetContent>
       </Sheet>
-        {/* Renderizando o componente FinishOrderDialog */}
-        {finishOrderDialogIsOpen && (
-          <FinishOrderDialog
-            open={finishOrderDialogIsOpen}
-            onOpenChange={setFinishOrderDialogIsOpen}
-          />
-        )}
+      {/* Renderizando o componente FinishOrderDialog */}
+      {finishOrderDialogIsOpen && (
+        <FinishOrderDialog
+          open={finishOrderDialogIsOpen}
+          onOpenChange={setFinishOrderDialogIsOpen}
+        />
+      )}
     </>
   );
 };
