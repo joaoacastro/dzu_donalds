@@ -58,6 +58,9 @@ const CartSheet = () => {
         <FinishOrderDialog
           open={finishOrderDialogIsOpen}
           onOpenChange={setFinishOrderDialogIsOpen}
+          products={products}
+          restaurantId={products[0].restaurantId}
+          consumptionMethod={products[0].consumptionMethod}
         />
       )}
     </>

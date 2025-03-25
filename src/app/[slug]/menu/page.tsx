@@ -4,9 +4,23 @@ import { getRestaurantBySlug } from "./actions/get-restaurant-by-slug";
 import RestaurantCategories from "./components/categories";
 import RestaurantHeader from "./components/header";
 
-interface RestaurantMenuPageProps {
-  params: { slug: string };
-  searchParams: { consumptionMethod: string };
+// interface RestaurantMenuPageProps {
+//   params: { slug: string }; // ⬅️ Removido o Promise<>
+//   searchParams: { consumptionMethod: string };
+// }
+
+// export interface PageProps {
+//   params: { slug: string };
+//   searchParams?: { consumptionMethod?: string };
+// }
+
+export interface PageProps {
+  params: Promise<{ slug: string }>;
+  searchParams?: Record<string, unknown>;
+}
+
+export async function generateStaticParams() {
+  return [{ slug: "algum-slug" }, { slug: "outro-slug" }];
 }
 
 const isConsumptionMethodValid = (consumptionMethod: string) => {
@@ -16,14 +30,16 @@ const isConsumptionMethodValid = (consumptionMethod: string) => {
 const RestaurantMenuPage = async ({
   params,
   searchParams,
-}: RestaurantMenuPageProps) => {
+}: PageProps) => {
   console.log("RestaurantMenuPage started");
-  const { slug } = params;
+
+  const { slug } = await params; // ✅ Pegando o slug corretamente
   console.log("Slug:", slug);
-  const { consumptionMethod } = searchParams;
+
+  const { consumptionMethod } = searchParams || {};
   console.log("ConsumptionMethod:", consumptionMethod);
 
-  if (!isConsumptionMethodValid(consumptionMethod)) {
+  if (!isConsumptionMethodValid(String(consumptionMethod || ""))) {
     console.log("Invalid consumption method");
     return notFound();
   }

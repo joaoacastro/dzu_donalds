@@ -5,6 +5,8 @@ import { createContext, ReactNode, useState } from "react";
 
 export interface CartProduct
   extends Pick<Product, "id" | "name" | "price" | "imageUrl"> {
+  consumptionMethod: ConsumptionMethod;
+  restaurantId: string;
   quantity: number;
 }
 
